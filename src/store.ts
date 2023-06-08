@@ -1,11 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-
-import counterReducer from "./features/counter/counterSlice";
-import formReducer from "./features/stateForm/formSlice";
+import userReducer from "./features/user/userSlice";
+import authReducer from "./features/auth/authSlice";
 
 export function makeStore() {
   return configureStore({
-    reducer: { counter: counterReducer, form: formReducer },
+    reducer: { user: userReducer, auth: authReducer },
   });
 }
 
