@@ -2,11 +2,20 @@ import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
+import { useAppDispatch } from "../../hooks";
+import { loginUser } from "../../features/user/api";
+import { useRouter } from "next/router";
 
 export const FormLogin = () => {
   const { register, handleSubmit } = useForm();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const onSubmit: SubmitHandler<any> = (data: string) => console.log(data);
+  const onSubmit: SubmitHandler<any> = (data: string) => {
+    dispatch(loginUser(data)).then((res) => {
+      router.push("/home");
+    });
+  };
 
   return (
     <div className="p-6 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-6">
@@ -29,12 +38,9 @@ export const FormLogin = () => {
           {...register("password")}
         />
 
-        <Link
-          href="/home"
-          className="w-full p-4 rounded-radius-2 bg-gray-1 text-gray-5 text-body-1 text-center"
-        >
+        <button className="w-full p-4 rounded-radius-2 bg-gray-1 text-gray-5 text-body-1 text-center">
           Entrar
-        </Link>
+        </button>
         <span className="text-center text-body-2 text-gray-2">
           Esqueceu a senha?
         </span>

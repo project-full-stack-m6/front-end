@@ -2,21 +2,14 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { useAppDispatch } from "../../hooks";
-import { fetchUsers, postUser } from "../../features/user/userSlice";
-import { usePathname } from "next/navigation";
+import { postUser } from "../../features/user/api";
 
 export const FormRegister = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useAppDispatch();
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    const createUser = dispatch(postUser(data));
-    console.log(createUser);
-    // if(createUser){
-    //   usePathname()
-    // }
-  };
-
+  const onSubmit: SubmitHandler<any> = async (data) =>
+    await dispatch(postUser(data));
   return (
     <div className="p-6 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-5">
       <h1 className="text-heading-1 text-gray-2">

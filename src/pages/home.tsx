@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { ContainerContact } from "../components/ContainerContact";
 import { ContainerRegisterContact } from "../components/ContainerRegisterContact";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { getUser } from "../features/user/api";
 
 const Dashboard = () => {
+  const select = useAppSelector;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <React.Fragment>
       <Header />
