@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { useAppDispatch } from "../../hooks";
-import { postUser } from "../../features/user/api";
+import { postUser } from "../../features/auth/authApi";
 
 export const FormRegister = () => {
   const { register, handleSubmit } = useForm();

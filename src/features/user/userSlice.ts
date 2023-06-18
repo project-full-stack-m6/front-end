@@ -1,10 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../../store";
+import { getUser } from "./userApi";
 
 export interface iInitialState {
   user: null | iUser;
+  contacts: iUser[];
   error: string | null;
   loading: boolean | null;
+  navigation: boolean;
 }
 
 export interface iUser {
@@ -13,13 +16,15 @@ export interface iUser {
   phone: string;
   is_staff: boolean;
   is_admin: boolean;
-  my_wallet: Object[];
+  my_wallet: { contacts: iUser[] };
 }
 
 const initialState = {
   user: null,
+  contacts: [],
   error: null,
   loading: null,
+  navigation: false,
 };
 
 // export const fetchUsers = createAsyncThunk<iUser, [string, number, any]>(
@@ -45,17 +50,37 @@ export const userSlice = createSlice({
   initialState: initialState as iInitialState,
   reducers: {
     addUser: (state, action: PayloadAction<iUser>) => {
-      state.user = action.payload;
+      if (action.payload) {
+        state.user = action.payload;
+        state.contacts = action.payload.my_wallet.contacts;
+      }
+    },
+    addContact: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      if (action.payload) {
+        state.contacts = action.payload.contacts;
+      }
     },
     removeUser: (state) => {
       state.user = null;
     },
+    shouldNavigation: (state) => {
+      state.navigation = true;
+    },
+    resetNavigation: (state) => {
+      state.navigation = false;
+    },
   },
   extraReducers: (builder) => {
     builder
+      // .addCase(getUser.fulfilled, (state, action) => {
+      //   console.log(state);
+      // })
       .addMatcher(
-        (action) => action.type.endsWith("/pending"),
-        (state) => {
+        (action) => {
+          return action.type.endsWith("/pending");
+        },
+        (state, action) => {
           state.loading = true;
           state.error = null;
         }
@@ -63,8 +88,16 @@ export const userSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
         (state, action) => {
-          state.loading = true;
+          // console.log("rejected", action);
+          state.loading = false;
           state.error = action.error.message;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/fulfilled"),
+        (state, action) => {
+          // console.log("fulfilled", action);
+          state.loading = false;
         }
       );
   },
@@ -74,6 +107,12 @@ export const selectUser = (state: AppState) => state.user;
 
 export const select = (state: AppState) => state;
 
-export const { addUser } = userSlice.actions;
+export const {
+  addUser,
+  removeUser,
+  addContact,
+  resetNavigation,
+  shouldNavigation,
+} = userSlice.actions;
 
 export default userSlice.reducer;

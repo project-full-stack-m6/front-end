@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks";
 export const Contact = () => {
   const user = useAppSelector(selectUser) as iInitialState;
 
-  const contacts = user.user ? user.user.my_wallet : [];
+  const contacts = user.contacts;
 
   return (
     <ul className="flex flex-col justify-center gap-5">

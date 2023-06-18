@@ -2,18 +2,21 @@ import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
-import { useAppDispatch } from "../../hooks";
-import { loginUser } from "../../features/user/api";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { loginUser } from "../../features/auth/authApi";
 import { useRouter } from "next/router";
+import { iUser } from "../../features/user/userSlice";
 
 export const FormLogin = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<any> = (data: string) => {
+  const onSubmit: SubmitHandler<any> = (data: iUser) => {
     dispatch(loginUser(data)).then((res) => {
-      router.push("/home");
+      if (res.payload) {
+        router.push("home");
+      }
     });
   };
 

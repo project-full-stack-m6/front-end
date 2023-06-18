@@ -1,11 +1,25 @@
 import type { NextPage } from "next";
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { ContainerFormLogin } from "../components/ContainerFormLogin";
 import { ContainerDecoration } from "../components/ContainerDecoration";
 import { Footer } from "../components/Footer";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { resetNavigation, selectUser } from "../features/user/userSlice";
+import { useRouter } from "next/router";
 
 const IndexPage: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useAppSelector(selectUser).navigation;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (navigation) {
+      router.push("/");
+    }
+    dispatch(resetNavigation);
+  }, [navigation]);
+
   return (
     <React.Fragment>
       <Header />

@@ -4,15 +4,21 @@ import { Footer } from "../components/Footer";
 import { ContainerContact } from "../components/ContainerContact";
 import { ContainerRegisterContact } from "../components/ContainerRegisterContact";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { getUser } from "../features/user/api";
+import { getUser } from "../features/user/userApi";
+import { addUser, selectUser } from "../features/user/userSlice";
 
 const Dashboard = () => {
-  const select = useAppSelector;
   const dispatch = useAppDispatch();
+  const select = useAppSelector;
+  const user = select(selectUser).user;
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getUser()).then((res) => {
+      dispatch(addUser(res.payload));
+    });
   }, []);
+
+  //lembrar de passar esse useEffect para o meu middleware
 
   return (
     <React.Fragment>

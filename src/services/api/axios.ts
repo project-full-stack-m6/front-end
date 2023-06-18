@@ -5,6 +5,15 @@ export const instance = axios.create({
   timeout: 3000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${() => window.localStorage.getItem("authToken")}`,
   },
+});
+
+instance.interceptors.request.use((config) => {
+  const token = window.localStorage.getItem("authToken");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 });
