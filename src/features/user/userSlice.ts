@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../../store";
-import { getUser } from "./userApi";
 
 export interface iInitialState {
   user: null | iUser;
@@ -51,12 +50,12 @@ export const userSlice = createSlice({
   reducers: {
     addUser: (state, action: PayloadAction<iUser>) => {
       if (action.payload) {
+        console.log(action.payload);
         state.user = action.payload;
-        state.contacts = action.payload.my_wallet.contacts;
+        state.contacts = action.payload.my_wallet?.contacts || [];
       }
     },
     addContact: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
       if (action.payload) {
         state.contacts = action.payload.contacts;
       }
@@ -65,6 +64,7 @@ export const userSlice = createSlice({
       state.user = null;
     },
     shouldNavigation: (state) => {
+      console.log(state);
       state.navigation = true;
     },
     resetNavigation: (state) => {

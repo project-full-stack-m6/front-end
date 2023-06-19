@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import React from "react";
-import { Header } from "../components/Header";
-import { ContainerDecoration } from "../components/ContainerDecoration";
-import { Footer } from "../components/Footer";
-import { ContainerFormRegister } from "../components/ContainerFormRegister";
+import { Header } from "../../components/Header";
+import { ContainerDecoration } from "../../components/ContainerDecoration";
+import { Footer } from "../../components/Footer";
+import { ContainerFormRegister } from "../../components/ContainerFormRegister";
 
 const IndexPage: NextPage = () => {
   return (

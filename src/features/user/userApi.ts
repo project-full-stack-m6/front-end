@@ -19,11 +19,11 @@ export const getAllUsers = createAsyncThunk(
         console.log(err);
       })
 );
-export const updateUser = createAsyncThunk(
+export const patchUser = createAsyncThunk(
   "users/fetchUsers",
-  async (userId: number, data: any) =>
+  async (data: any) =>
     await instance
-      .patch(`users/${userId}`, data)
+      .patch(`users`, data)
       .then((res) => res.data)
       .catch((err) => {
         console.log(err);
@@ -44,6 +44,16 @@ export const postContact = createAsyncThunk(
   async (data: any) =>
     await instance
       .post(`wallets`, data)
+      .then((res) => res.data)
+      .catch((err) => {
+        console.log(err);
+      })
+);
+export const removeContact = createAsyncThunk(
+  "updateContact",
+  async (contactId: number) =>
+    await instance
+      .patch(`wallets/${contactId}`)
       .then((res) => res.data)
       .catch((err) => {
         console.log(err);

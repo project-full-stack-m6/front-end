@@ -7,11 +7,7 @@ export const postUser = createAsyncThunk(
   async (data: any) =>
     await instance
       .post(`users`, data)
-      .then((res) => {
-        if (res.status === 201) {
-          console.log(res.data);
-        }
-      })
+      .then((res) => res.data)
       .catch((err) => console.log(err))
 );
 

@@ -3,11 +3,13 @@ import userReducer, { shouldNavigation } from "./features/user/userSlice";
 import authReducer from "./features/auth/authSlice";
 
 const protectUser = (store) => (next) => (action) => {
-  const user = store.getState().user;
+  const user = store.getState().user.user;
+  console.log(user);
 
-  if (action.type !== "getUsers" && !user) {
-    store.dispatch(shouldNavigation);
-  }
+  const { dispatch } = store;
+  dispatch(shouldNavigation);
+  const navigation = store.getState().user.navigation;
+  console.log("navigation", navigation);
 
   return next(action);
 };

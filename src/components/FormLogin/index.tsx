@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loginUser } from "../../features/auth/authApi";
 import { useRouter } from "next/router";
 import { iUser } from "../../features/user/userSlice";
+import { toast } from "react-toastify";
 
 export const FormLogin = () => {
   const { register, handleSubmit } = useForm();
@@ -15,6 +16,9 @@ export const FormLogin = () => {
   const onSubmit: SubmitHandler<any> = (data: iUser) => {
     dispatch(loginUser(data)).then((res) => {
       if (res.payload) {
+        // toast.success("Success Notification !", {
+        //   position: toast.POSITION.TOP_CENTER,
+        // });
         router.push("home");
       }
     });

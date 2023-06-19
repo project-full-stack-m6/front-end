@@ -9,17 +9,6 @@ import { resetNavigation, selectUser } from "../features/user/userSlice";
 import { useRouter } from "next/router";
 
 const IndexPage: NextPage = () => {
-  const dispatch = useAppDispatch();
-  const navigation = useAppSelector(selectUser).navigation;
-  const router = useRouter();
-
-  useEffect(() => {
-    if (navigation) {
-      router.push("/");
-    }
-    dispatch(resetNavigation);
-  }, [navigation]);
-
   return (
     <React.Fragment>
       <Header />
