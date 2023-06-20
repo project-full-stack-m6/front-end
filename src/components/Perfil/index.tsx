@@ -56,7 +56,7 @@ export const Perfil = ({ setOpenModal }: iPerfil) => {
         </button>
       </div>
       <Modal openModal={openModalEdit} setOpenModal={setOpenModalEdit}>
-        <FormEditUser setOpenModal={setOpenModalEdit} />
+        <FormEditUser user={user} setOpenModal={setOpenModalEdit} />
       </Modal>
     </div>
   );

@@ -1,20 +1,20 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { patchUser } from "../../features/user/userApi";
 import { useAppDispatch } from "../../hooks";
-import { addContact, iUser } from "../../features/user/userSlice";
+import { addUser, iUser } from "../../features/user/userSlice";
 import { Dispatch, SetStateAction } from "react";
 
 interface iFormEditUser {
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  user: iUser | null;
 }
 
-export const FormEditUser = ({ setOpenModal }: iFormEditUser) => {
+export const FormEditUser = ({ setOpenModal, user }: iFormEditUser) => {
   const dispatch = useAppDispatch();
-
   const { register, handleSubmit } = useForm();
 
   const submitContact: SubmitHandler<any> = (data: iUser) => {
-    dispatch(patchUser(data)).then((res) => dispatch(addContact(res.payload)));
+    dispatch(patchUser(data)).then((res) => dispatch(addUser(res.payload)));
   };
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center p-4 gap-5">
@@ -28,7 +28,8 @@ export const FormEditUser = ({ setOpenModal }: iFormEditUser) => {
         <input
           className="pl-2 pr-1 py-2 border-2 shadow-sm rounded-radius-2"
           type="text"
-          {...register("email")}
+          defaultValue={user?.name}
+          {...register("name")}
         />
         <label className="text-body-1 text-gray-1 font-600" htmlFor="">
           Email
@@ -36,6 +37,7 @@ export const FormEditUser = ({ setOpenModal }: iFormEditUser) => {
         <input
           className="pl-2 pr-1 py-2 border-2 shadow-sm rounded-radius-2"
           type="text"
+          defaultValue={user?.email}
           {...register("email")}
         />
         <label className="text-body-1 text-gray-1 font-600" htmlFor="">
@@ -44,15 +46,8 @@ export const FormEditUser = ({ setOpenModal }: iFormEditUser) => {
         <input
           className="pl-2 pr-1 py-2 border-2 shadow-sm rounded-radius-2"
           type="text"
-          {...register("email")}
-        />
-        <label className="text-body-1 text-gray-1 font-600" htmlFor="">
-          Senha
-        </label>
-        <input
-          className="pl-2 pr-1 py-2 border-2 shadow-sm rounded-radius-2"
-          type="text"
-          {...register("email")}
+          {...register("phone")}
+          defaultValue={user?.phone}
         />
         <div className="flex gap-3 self-end">
           <button className="p-2 rounded-radius-2 bg-gray-1 text-gray-5 text-body-1 text-center">

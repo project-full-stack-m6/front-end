@@ -60,21 +60,24 @@ export const Header = () => {
           navBar ? "h-56" : ""
         }`}
       >
-        <div className="w-full flex items-center justify-between">
-          <Link
-            href="/"
-            replace
-            className="p-4 w-full bg-gray-5 hover:bg-gray-2 text-body font-600 text-gray-1 hover:text-gray-5 text-center "
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="p-4 w-full bg-gray-1 hover:bg-gray-2 text-body font-600 text-gray-5 text-center hover:"
-          >
-            Registro
-          </Link>
-        </div>
+        {pathname === "/home" ? null : (
+          <div className="w-full flex items-center justify-between">
+            <Link
+              href="/"
+              replace
+              className="p-4 w-full bg-gray-5 hover:bg-gray-2 text-body font-600 text-gray-1 hover:text-gray-5 text-center "
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="p-4 w-full bg-gray-1 hover:bg-gray-2 text-body font-600 text-gray-5 text-center hover:"
+            >
+              Registro
+            </Link>
+          </div>
+        )}
+
         <ul className="bg-gray-3 flex flex-col items-center">
           {pathname === "/home"
             ? navButtons.map((elem) => (
@@ -89,7 +92,6 @@ export const Header = () => {
             : null}
         </ul>
       </nav>
-
       <Modal openModal={openModal} setOpenModal={setOpenModal}>
         <Perfil setOpenModal={setOpenModal} />
       </Modal>

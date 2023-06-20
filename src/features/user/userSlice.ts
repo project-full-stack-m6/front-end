@@ -26,24 +26,6 @@ const initialState = {
   loading: true,
 };
 
-// export const fetchUsers = createAsyncThunk<iUser, [string, number, any]>(
-//   "users/fetchUsers",
-//   ([method, userId, data]) => {
-//     const request: Record<string, any> = {
-//       postUser: async () => await instance.post(`users`, data),
-//       getUser: async () => await instance.get(`users/${userId}`),
-//       getAllUsers: async () => await instance.get(`users/all`),
-//       updateUser: async () => await instance.patch(`users/${userId}`, data),
-//       deleteUser: async () => await instance.delete(`users/${userId}`),
-//       addUser: async () => await instance.post(`wallets`, data),
-//     };
-
-//     const response = request[method].catch((err: any) => console.log(err));
-
-//     return response.data;
-//   }
-// );
-
 export const userSlice = createSlice({
   name: "user",
   initialState: initialState as iInitialState,
@@ -87,7 +69,6 @@ export const userSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith("/fulfilled"),
         (state, action) => {
-          // console.log("fulfilled", action);
           state.loading = false;
         }
       );

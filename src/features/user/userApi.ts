@@ -27,7 +27,10 @@ export const patchUser = createAsyncThunk(
   async (data: any) =>
     await instance
       .patch(`users`, data)
-      .then((res) => res.data)
+      .then((res) => {
+        toast.success("Perfil atualizado com sucesso");
+        return res.data;
+      })
       .catch((err) => {
         toast.error(err.response.data.message[0]);
       })
@@ -38,7 +41,7 @@ export const deleteUser = createAsyncThunk(
     await instance
       .delete(`users`)
       .then((res) => {
-        toast.success("Usuário deletado com sucesso");
+        toast.success("Perfil deletado com sucesso");
         return res.data;
       })
       .catch((err) => {

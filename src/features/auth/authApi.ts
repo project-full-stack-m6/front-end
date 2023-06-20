@@ -12,7 +12,7 @@ export const postUser = createAsyncThunk(
         toast.success("Usuário cadastrado com sucesso");
         return res.data;
       })
-      .catch((err) => console.log(err))
+      .catch((err) => toast.error(err.response.data.message[0]))
 );
 
 export const loginUser = createAsyncThunk("users/fetchUsers", (data: iUser) =>
