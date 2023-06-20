@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { addUser, selectUser } from "../../features/user/userSlice";
 import { CardHeader } from "../CardHeader";
 import { useRouter } from "next/dist/client/router";
+import { Modal } from "../Modal";
+import { Perfil } from "../Perfil";
 
 interface iButton {
   name: string;
@@ -14,14 +16,16 @@ type iNavButtons = iButton[];
 
 export const Header = () => {
   const [navBar, setNavBar] = useState<boolean>();
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const select = useAppSelector;
   const dispatch = useAppDispatch();
   const user = select(selectUser).user;
   const router = useRouter();
+  const { pathname } = router;
 
   const navButtons: iNavButtons = [
-    { name: "Meu perfil", onClick: () => "" },
+    { name: "Meu perfil", onClick: () => setOpenModal(true) },
     {
       name: "Sair",
       onClick: () => {
@@ -40,10 +44,10 @@ export const Header = () => {
             MyWallet
           </h1>
         </figure>
-        {user ? (
+        {pathname === "/home" ? (
           <CardHeader
             onClick={() => setNavBar((active) => !active)}
-            user={user}
+            user={user!}
           />
         ) : (
           <button onClick={() => setNavBar((active) => !active)} className="">
@@ -72,33 +76,23 @@ export const Header = () => {
           </Link>
         </div>
         <ul className="bg-gray-3 flex flex-col items-center">
-          {/* <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
-            home
-          </li>
-          <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
-            Meu perfil
-          </li>
-          <ModalEditUser openModal={openModal} setOpenModal={setOpenModal} />
-          <li
-            onClick={() => setOpenModal(true)}
-            className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out "
-          >
-            Editar conta
-          </li>
-          <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
-            Deletar conta
-          </li> */}
-          {navButtons.map((elem) => (
-            <li
-              key={elem.name}
-              onClick={elem.onClick}
-              className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out "
-            >
-              {elem.name}
-            </li>
-          ))}
+          {pathname === "/home"
+            ? navButtons.map((elem) => (
+                <li
+                  key={elem.name}
+                  onClick={elem.onClick}
+                  className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out "
+                >
+                  {elem.name}
+                </li>
+              ))
+            : null}
         </ul>
       </nav>
+
+      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+        <Perfil setOpenModal={setOpenModal} />
+      </Modal>
     </header>
   );
 };

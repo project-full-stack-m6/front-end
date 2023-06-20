@@ -34,9 +34,9 @@ export const patchUser = createAsyncThunk(
 );
 export const deleteUser = createAsyncThunk(
   "users/fetchUsers",
-  async (userId: number) =>
+  async () =>
     await instance
-      .delete(`users/${userId}`)
+      .delete(`users`)
       .then((res) => {
         toast.success("Usuário deletado com sucesso");
         return res.data;
