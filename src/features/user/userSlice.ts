@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../../store";
+import { getUser } from "./userApi";
 
 export interface iInitialState {
   user: null | iUser;
   contacts: iUser[];
   error: string | null;
   loading: boolean | null;
-  navigation: boolean;
 }
 
 export interface iUser {
@@ -22,8 +22,7 @@ const initialState = {
   user: null,
   contacts: [],
   error: null,
-  loading: null,
-  navigation: false,
+  loading: true,
 };
 
 // export const fetchUsers = createAsyncThunk<iUser, [string, number, any]>(
@@ -48,11 +47,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState: initialState as iInitialState,
   reducers: {
-    addUser: (state, action: PayloadAction<iUser>) => {
-      if (action.payload) {
-        console.log(action.payload);
+    addUser: (state, action: PayloadAction<iUser | null>) => {
+      if (action.payload !== state.user) {
         state.user = action.payload;
-        state.contacts = action.payload.my_wallet?.contacts || [];
+        state.contacts = action.payload?.my_wallet?.contacts || [];
       }
     },
     addContact: (state, action: PayloadAction<any>) => {
@@ -60,22 +58,15 @@ export const userSlice = createSlice({
         state.contacts = action.payload.contacts;
       }
     },
-    removeUser: (state) => {
-      state.user = null;
-    },
-    shouldNavigation: (state) => {
-      console.log(state);
-      state.navigation = true;
-    },
-    resetNavigation: (state) => {
-      state.navigation = false;
+    addLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(getUser.fulfilled, (state, action) => {
-      //   console.log(state);
-      // })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addMatcher(
         (action) => {
           return action.type.endsWith("/pending");
@@ -88,7 +79,6 @@ export const userSlice = createSlice({
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
         (state, action) => {
-          // console.log("rejected", action);
           state.loading = false;
           state.error = action.error.message;
         }
@@ -107,12 +97,6 @@ export const selectUser = (state: AppState) => state.user;
 
 export const select = (state: AppState) => state;
 
-export const {
-  addUser,
-  removeUser,
-  addContact,
-  resetNavigation,
-  shouldNavigation,
-} = userSlice.actions;
+export const { addUser, addContact, addLoading } = userSlice.actions;
 
 export default userSlice.reducer;

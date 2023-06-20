@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../services/api/axios";
+import { toast } from "react-toastify";
 
 export const getUser = createAsyncThunk(
   "getUsers",
@@ -7,7 +8,9 @@ export const getUser = createAsyncThunk(
     await instance
       .get(`users`)
       .then((res) => res.data)
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        toast.error(err.response.data.message[0]);
+      })
 );
 export const getAllUsers = createAsyncThunk(
   "users/fetchUsers",
@@ -16,7 +19,7 @@ export const getAllUsers = createAsyncThunk(
       .get(`users/all`)
       .then((res) => res.data)
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message[0]);
       })
 );
 export const patchUser = createAsyncThunk(
@@ -26,7 +29,7 @@ export const patchUser = createAsyncThunk(
       .patch(`users`, data)
       .then((res) => res.data)
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message[0]);
       })
 );
 export const deleteUser = createAsyncThunk(
@@ -34,9 +37,12 @@ export const deleteUser = createAsyncThunk(
   async (userId: number) =>
     await instance
       .delete(`users/${userId}`)
-      .then((res) => res.data)
+      .then((res) => {
+        toast.success("Usuário deletado com sucesso");
+        return res.data;
+      })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message[0]);
       })
 );
 export const postContact = createAsyncThunk(
@@ -44,9 +50,12 @@ export const postContact = createAsyncThunk(
   async (data: any) =>
     await instance
       .post(`wallets`, data)
-      .then((res) => res.data)
+      .then((res) => {
+        toast.success("Contato adicionado com sucesso");
+        return res.data;
+      })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message[0]);
       })
 );
 export const removeContact = createAsyncThunk(
@@ -54,8 +63,11 @@ export const removeContact = createAsyncThunk(
   async (contactId: number) =>
     await instance
       .patch(`wallets/${contactId}`)
-      .then((res) => res.data)
+      .then((res) => {
+        toast.success("Contato deletado com sucesso");
+        return res.data;
+      })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message[0]);
       })
 );

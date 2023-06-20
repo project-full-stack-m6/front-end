@@ -7,10 +7,10 @@ import { removeContact } from "../../features/user/userApi";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 export const Contact = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser) as iInitialState;
 
   const contacts = user.contacts;
-  const dispatch = useAppDispatch();
 
   const submitContact: any = (contactId: number) => {
     dispatch(removeContact(contactId)).then((res: any) => {

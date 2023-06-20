@@ -1,16 +1,36 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useAppSelector } from "../../hooks";
-import { selectUser } from "../../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { addUser, selectUser } from "../../features/user/userSlice";
 import { CardHeader } from "../CardHeader";
-import { ModalEditUser } from "../ModalEditUser";
+import { useRouter } from "next/dist/client/router";
+
+interface iButton {
+  name: string;
+  onClick: () => void;
+}
+
+type iNavButtons = iButton[];
 
 export const Header = () => {
   const [navBar, setNavBar] = useState<boolean>();
-  const [openModal, setOpenModal] = useState(true);
 
   const select = useAppSelector;
+  const dispatch = useAppDispatch();
   const user = select(selectUser).user;
+  const router = useRouter();
+
+  const navButtons: iNavButtons = [
+    { name: "Meu perfil", onClick: () => "" },
+    {
+      name: "Sair",
+      onClick: () => {
+        window.localStorage.removeItem("authToken"),
+          router.push("/"),
+          dispatch(addUser(null));
+      },
+    },
+  ];
 
   return (
     <header className="h-20  relative flex flex-col items-center justify-between shadow-md">
@@ -54,7 +74,7 @@ export const Header = () => {
         <ul className="bg-gray-3 flex flex-col items-center">
           {/* <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
             home
-          </li> */}
+          </li>
           <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
             Meu perfil
           </li>
@@ -67,7 +87,16 @@ export const Header = () => {
           </li>
           <li className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out ">
             Deletar conta
-          </li>
+          </li> */}
+          {navButtons.map((elem) => (
+            <li
+              key={elem.name}
+              onClick={elem.onClick}
+              className="w-full text-center text-body-1 font-600 p-2 border-b-2 border-gray-2 text-gray-1 hover:text-white cursor-pointer hover:bg-gray-2 delay-50 ease-in-out "
+            >
+              {elem.name}
+            </li>
+          ))}
         </ul>
       </nav>
     </header>

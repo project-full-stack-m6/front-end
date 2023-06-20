@@ -1,29 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import userReducer, { shouldNavigation } from "./features/user/userSlice";
+import userReducer from "./features/user/userSlice";
 import authReducer from "./features/auth/authSlice";
-
-const protectUser = (store) => (next) => (action) => {
-  const user = store.getState().user.user;
-  console.log(user);
-
-  const { dispatch } = store;
-  dispatch(shouldNavigation);
-  const navigation = store.getState().user.navigation;
-  console.log("navigation", navigation);
-
-  return next(action);
-};
 
 export function makeStore() {
   return configureStore({
     reducer: { user: userReducer, auth: authReducer },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        thunk: {
-          extraArgument: protectUser,
-        },
-        serializableCheck: false,
-      }).concat(protectUser),
   });
 }
 
