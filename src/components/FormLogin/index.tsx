@@ -31,7 +31,7 @@ export const FormLogin = () => {
   };
 
   return (
-    <div className="p-6 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-6">
+    <div className="p-6 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-6 max-w-screen-sm">
       <h1 className="text-heading-1 text-gray-2">Seja bem vindo novamente</h1>
       <form className="flex flex-col  gap-5" onSubmit={handleSubmit(onSubmit)}>
         <label className="text-body-1 text-gray-2 font-600" htmlFor="">

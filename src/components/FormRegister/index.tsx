@@ -20,7 +20,7 @@ export const FormRegister = () => {
   const onSubmit: SubmitHandler<any> = async (data) =>
     await dispatch(postUser(data));
   return (
-    <div className="p-8 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-5">
+    <div className="p-8 border-2 border-gray-2 rounded-radius-3 flex flex-col gap-5 max-w-screen-sm">
       <h1 className="text-heading-1 text-gray-1 mb-4">
         Seja bem vindo a <span className="font-600">myWallet</span>, faça seu
         cadastro já

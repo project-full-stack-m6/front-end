@@ -2,7 +2,7 @@ import { FormLogin } from "../FormLogin";
 
 export const ContainerFormLogin = () => {
   return (
-    <section>
+    <section className="flex flex-col items-center">
       <FormLogin />
     </section>
   );
