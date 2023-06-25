@@ -58,7 +58,8 @@ export const postContact = createAsyncThunk(
         return res.data;
       })
       .catch((err) => {
-        toast.error(err.response.data.message[0]);
+        console.log(err);
+        toast.error(err.response.data.message);
       })
 );
 export const removeContact = createAsyncThunk(

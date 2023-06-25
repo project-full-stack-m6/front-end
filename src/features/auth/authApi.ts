@@ -24,6 +24,7 @@ export const loginUser = createAsyncThunk("users/fetchUsers", (data: iUser) =>
       return res.data;
     })
     .catch((err) => {
-      toast.error(err.response.data.message[0]);
+      console.log(err);
+      toast.error(err.response.data.message);
     })
 );

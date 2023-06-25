@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "../../components/Header";
-import { Footer } from "../../components/Footer";
-import { ContainerContact } from "../../components/ContainerContact";
-import { ContainerRegisterContact } from "../../components/ContainerRegisterContact";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addLoading, selectUser } from "../../features/user/userSlice";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { ContainerContact } from "../components/ContainerContact";
+import { ContainerRegisterContact } from "../components/ContainerRegisterContact";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { addLoading, selectUser } from "../features/user/userSlice";
 import "react-toastify/dist/ReactToastify.css";
-import { getUser } from "../../features/user/userApi";
+import { getUser } from "../features/user/userApi";
 import { useRouter } from "next/router";
 
 const Dashboard = () => {

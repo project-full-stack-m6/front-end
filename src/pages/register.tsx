@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import React from "react";
 import { Header } from "../components/Header";
-import { ContainerFormLogin } from "../components/ContainerFormLogin";
 import { ContainerDecoration } from "../components/ContainerDecoration";
 import { Footer } from "../components/Footer";
+import { ContainerFormRegister } from "../components/ContainerFormRegister";
 
 const IndexPage: NextPage = () => {
   return (
@@ -11,7 +11,7 @@ const IndexPage: NextPage = () => {
       <Header />
       <main className="flex flex-col gap-5 px-[8%] py-10">
         <ContainerDecoration />
-        <ContainerFormLogin />
+        <ContainerFormRegister />
       </main>
       <Footer />
     </React.Fragment>

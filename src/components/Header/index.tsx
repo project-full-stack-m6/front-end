@@ -6,6 +6,7 @@ import { CardHeader } from "../CardHeader";
 import { useRouter } from "next/dist/client/router";
 import { Modal } from "../Modal";
 import { Perfil } from "../Perfil";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 
 interface iButton {
   name: string;
@@ -51,7 +52,7 @@ export const Header = () => {
           />
         ) : (
           <button onClick={() => setNavBar((active) => !active)} className="">
-            Menu
+            <Bars3Icon className="h-6 w-6 text-gray-1" />
           </button>
         )}
       </div>
