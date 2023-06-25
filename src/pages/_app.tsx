@@ -1,14 +1,28 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { Provider } from "react-redux";
+import store from "../store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Provider } from 'react-redux'
-import type { AppProps } from 'next/app'
-
-import store from '../store'
-
-export default function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   return (
     <Provider store={store}>
       <Component {...pageProps} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Provider>
-  )
+  );
 }
+
+export default MyApp;

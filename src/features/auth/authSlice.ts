@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../../store";
+import { useRouter } from "next/router";
 
 interface iInitialState {
   token: string;
@@ -7,7 +8,7 @@ interface iInitialState {
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: { token: "login" } as iInitialState,
+  initialState: { token: "" } as iInitialState,
   reducers: {},
 });
 
